@@ -12,7 +12,6 @@ export default function MainHeader() {
   return (
     <div className={styles.container}>
       
-      {/* Left: Logo */}
       <div className={styles.logo_image}>
         <Link href="/">
           <Image
@@ -24,10 +23,8 @@ export default function MainHeader() {
         </Link>
       </div>
 
-      {/* Center: Heading */}
       <div className={styles.central_heading}>LOGO</div>
 
-      {/* Right: Horizontal Group */}
       <div className={styles.horizontal_group}>
         {mainHeaderHorizontalGroupUrls.map((url, i) => (
           <Image
@@ -39,7 +36,6 @@ export default function MainHeader() {
           />
         ))}
 
-        {/* Nested Subgroup */}
         <div className={styles.sub_group}>
           {mainHeaderSubHorizontalGroupUrls.map((url, i) => (
             <Image
@@ -53,7 +49,6 @@ export default function MainHeader() {
         </div>
       </div>
 
-      {/* Bottom: Navbar */}
       <Navbar />
     </div>
   );

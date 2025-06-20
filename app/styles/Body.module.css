@@ -1,0 +1,60 @@
+.options_at_top {
+  position: relative;
+  width: 1248px;
+  height: 88px;
+  border: 1px solid #E5E5E5;
+  display: flex;
+  align-items: center;
+  top: 250px;
+  left: 96px;
+}
+
+
+.products_length {
+  position: absolute;
+  top: 24px;
+  left: 0px;  
+  font-family: "Simplon Norm", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 40px;
+  text-transform: uppercase;
+  width: 90px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  color: #252020;
+}
+
+.filter_toggle {
+  position: absolute;
+  top: 24px;
+  left: 170px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  width: fit-content;
+}
+
+.dropdown_select {
+  position: absolute;
+  top: 24px;
+  left: 1064px;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  height: 40px;
+  width: fit-content;
+}
+
+.dropdown_text {
+    width: 124px;
+    height: 40px;
+    font-family: "Simplon Norm", sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 40px;
+    letter-spacing: 0px;
+    text-transform: uppercase;
+}
