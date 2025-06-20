@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+  max-width: 1440px;
+  height: 188px;
+  margin: 32px auto 0;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+}
+
+.logo_image {
+  position: absolute;
+  top: 40px;
+  left: 96px;
+  width: 36px;
+  height: 36px;
+}
+
+.central_heading {
+  position: absolute;
+  top: 36px;
+  left: 667px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 36px;
+  letter-spacing: 1px;
+}
+
+.horizontal_group {
+  position: absolute;
+  top: 46px;
+  left: 1100px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+.sub_group {
+  display: flex;
+  gap: 5px;
+  width: fit-content;
+  align-items: center;
+}
