@@ -1,12 +1,24 @@
 "use client"
 import styles from "../styles/Body.module.css"
 import useFetchProducts from "../hooks/useFetchProducts"
-import {hideFilterText, dropDownText} from "../utils/constants"
+import {hideFilterText, dropDownText, showFilterText} from "../utils/constants"
 import Image from "next/image"
+import SideFilter from "./SideFilters"
+import { useState } from "react"
+import useFetchProductCategories from "../hooks/useFetchProductCategories"
 
 export default function Body() {
+
     const [products,error,loading]=useFetchProducts()
+    const [categories, setCategories] = useFetchProductCategories()
+    const [toggleSideFilters, setToggleSideFilters] = useState(true)
+
+    function handleToggleSideFilters() {
+        setToggleSideFilters(!toggleSideFilters)
+    }
+
     return (
+        <div>
             <div className={styles.options_at_top}>
                 <div className={styles.products_length}>
                     {
@@ -28,9 +40,11 @@ export default function Body() {
                             alt="arrow_left_for_filter"
                             width={16}
                             height={16}
+                            onClick={handleToggleSideFilters}
+                            style={{cursor:'pointer'}}
                         />
-                    <div className={styles.filter_toggle_text}>
-                        {hideFilterText}
+                    <div className={styles.filter_toggle_text} >
+                        {toggleSideFilters ? hideFilterText :showFilterText }
                     </div>
                 </div>
 
@@ -43,6 +57,8 @@ export default function Body() {
                             height={16}
                         />
                 </div>
+            </div>
+            {toggleSideFilters && <SideFilter categories={categories} setCategories={setCategories} toggleSideFilters={toggleSideFilters}/>}
             </div>
     )
 }
