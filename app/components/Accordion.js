@@ -2,20 +2,20 @@ import { useState } from "react";
 import Image from "next/image";
 import styles from "../styles/Accordion.module.css";
 import {
-  accordionDropDownText,
   allText,
   unSelectAllText,
+  categoryAccordionText
 } from "../utils/constants";
 
-export default function Accordion({ categories, setCategories }) {
+export default function Accordion({ categories, setCategories, accordionText }) {
   const [toggleAccordion, setToggleAccordion] = useState(false);
 
   function handleAccordionToggle() {
-    setToggleAccordion((prev) => !prev);
+    setToggleAccordion(prev => !prev);
   }
 
   function handleUnSelectAll() {
-    const allUnselected = categories.map((cat) => ({
+    const allUnselected = categories.map(cat => ({
       ...cat,
       checked: false,
     }));
@@ -23,19 +23,18 @@ export default function Accordion({ categories, setCategories }) {
   }
 
   function handleSelectCheckbox(id) {
-    const selectedCategory = categories.map((cat) =>
+    const updatedCategories = categories.map(cat =>
       cat.id === id ? { ...cat, checked: !cat.checked } : cat
     );
-    setCategories(selectedCategory);
+    setCategories(updatedCategories);
   }
 
   return (
     <div className={styles.container}>
-   
       <div className={styles.accordion_closed}>
         <div className={styles.accordion_category_container}>
           <div className={styles.accordion_category_text}>
-            {accordionDropDownText}
+            {accordionText}
           </div>
           <div
             className={styles.accordion_toggle_icon}
@@ -52,27 +51,31 @@ export default function Accordion({ categories, setCategories }) {
         <div className={styles.all}>{allText}</div>
       </div>
 
-      <div
-        className={`${styles.accordion_opened} ${
-          toggleAccordion ? styles.open : ""
-        }`}
-      >
-        <div className={styles.unselect_all} onClick={handleUnSelectAll}>
-          {unSelectAllText}
-        </div>
+      <div className={`${styles.accordion_opened} ${toggleAccordion ? styles.open : ""}`}>
+        {categories && (
+          <div className={styles.unselect_all} onClick={handleUnSelectAll}>
+            {unSelectAllText}
+          </div>
+        )}
 
-        <div className={styles.filter_options}>
-          {categories?.map((category, i) => (
-            <div key={i} className={styles.filter_category}>
-              <input
-                type="checkbox"
-                checked={category?.checked}
-                onChange={() => handleSelectCheckbox(category.id)}
-              />
-              {category?.name}
-            </div>
-          ))}
-        </div>
+        {categories ? (
+          <div className={styles.filter_options}>
+            {categories.map((category, i) => (
+              <div key={i} className={styles.filter_category}>
+                <input
+                  type="checkbox"
+                  checked={category.checked}
+                  onChange={() => handleSelectCheckbox(category.id)}
+                />
+                {category.name}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <h4>
+            Current API supports only the `{categoryAccordionText}` filter
+          </h4>
+        )}
       </div>
     </div>
   );

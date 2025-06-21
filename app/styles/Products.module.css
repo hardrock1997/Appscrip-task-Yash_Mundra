@@ -1,0 +1,29 @@
+.container {
+  position: absolute;
+  top: 652px;
+  left: 412px;
+  width: 932px;
+  height: auto;
+  max-height: 2932px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  gap: 4px 10px;
+}
+
+.container_fullWidth {
+  width: 1248px;
+  left: 96px;
+  overflow-x: hidden;
+}
+
+.loading_text {
+  position: absolute;
+  top: 400px;
+  left: 400px;
+  font-family: "Simplon Norm", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 40px;
+  text-transform: uppercase;
+}
