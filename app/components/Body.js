@@ -10,18 +10,28 @@ import {
   dropDownText,
   showFilterText,
   categoryWiseProductsUrl,
-  headerDropDownText
+  headerDropDownText,
 } from "../utils/constants";
 
 import SideFilter from "./SideFilters";
 import Products from "./Products";
 
 export default function Body() {
-  const [products, error, loading, setProducts, productsCopy, setLoading, setError] = useFetchProducts();
+  const [
+    products,
+    error,
+    loading,
+    setProducts,
+    productsCopy,
+    setLoading,
+    setError,
+  ] = useFetchProducts();
+
   const [categories, setCategories] = useFetchProductCategories();
   const [toggleSideFilters, setToggleSideFilters] = useState(true);
   const [toggleHeaderDropDown, setToggleHeaderDropDown] = useState(false);
-  const [selectedDropDownOption, setSelectedDropDownOption] = useState(dropDownText);
+  const [selectedDropDownOption, setSelectedDropDownOption] =
+    useState(dropDownText);
 
   const handleToggleSideFilters = () => {
     setToggleSideFilters((prev) => !prev);
@@ -60,13 +70,16 @@ export default function Body() {
   useEffect(() => {
     const timerId = setTimeout(async () => {
       const selectedCategories = getSelectedProductsCategory();
-      const selectedOption = headerDropDownText.find(option => option.text === selectedDropDownOption);
+      const selectedOption = headerDropDownText.find(
+        (option) => option.text === selectedDropDownOption
+      );
       const id = selectedOption?.id || 0;
 
       const hasCategories = selectedCategories.length > 0;
       const isDefaultDropdown = selectedDropDownOption === dropDownText;
 
       let combinedResults = [];
+
       if (hasCategories) {
         const promises = selectedCategories.map(fetchProductsForThisCategory);
         const results = await Promise.all(promises);
@@ -84,7 +97,7 @@ export default function Body() {
             setProducts([...data].sort((a, b) => b.id - a.id));
             break;
           case 2:
-            setProducts([...data].filter(prod => prod.rating.rate > 3.5));
+            setProducts([...data].filter((prod) => prod.rating.rate > 3.5));
             break;
           case 3:
             setProducts([...data].sort((a, b) => a.price - b.price));
@@ -162,12 +175,14 @@ export default function Body() {
                   className={`${styles.dropdown_option} ${styles.dropdown_options_not_selected}`}
                   onClick={() => handleSelectDropDownOption(i)}
                 >
-                  <Image
-                    alt="dropdown_select"
-                    width={16}
-                    height={12.3}
-                    src="/dropdown_select.svg"
-                  />
+                  {dropDownText.text === selectedDropDownOption ? (
+                    <Image
+                      alt="dropdown_select"
+                      width={16}
+                      height={12.3}
+                      src="/dropdown_select.svg"
+                    />
+                  ) : null}
                   <span>{dropDownText.text}</span>
                 </div>
               ))}
