@@ -28,5 +28,5 @@ export default function useFetchProducts() {
     getProducts();
   }, []);
 
-  return [products, error, loading, setProducts, productsCopy];
+  return [products, error, loading, setProducts, productsCopy, setLoading, setError];
 }

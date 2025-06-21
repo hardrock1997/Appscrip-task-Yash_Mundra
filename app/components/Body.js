@@ -10,15 +10,18 @@ import {
   dropDownText,
   showFilterText,
   categoryWiseProductsUrl,
+  headerDropDownText
 } from "../utils/constants";
 
 import SideFilter from "./SideFilters";
 import Products from "./Products";
 
 export default function Body() {
-  const [products, error, loading, setProducts, productsCopy] = useFetchProducts();
+  const [products, error, loading, setProducts, productsCopy, setLoading, setError] = useFetchProducts();
   const [categories, setCategories] = useFetchProductCategories();
   const [toggleSideFilters, setToggleSideFilters] = useState(true);
+  const [toggleHeaderDropDown, setToggleHeaderDropDown] = useState(false);
+  const [selectedDropDownOption, setSelectedDropDownOption] = useState(dropDownText);
 
   const handleToggleSideFilters = () => {
     setToggleSideFilters((prev) => !prev);
@@ -29,33 +32,90 @@ export default function Body() {
   };
 
   async function fetchProductsForThisCategory(category) {
-    const res = await fetch(`${categoryWiseProductsUrl}${category.name}`);
-    return res.json();
+    try {
+      setLoading(true);
+      const res = await fetch(`${categoryWiseProductsUrl}${category.name}`);
+      return res.json();
+    } catch (error) {
+      setLoading(false);
+      setError(error) || "Could not get the Products";
+    }
   }
+
+  const handleToggleHeaderDropDown = () => {
+    setToggleHeaderDropDown(!toggleHeaderDropDown);
+  };
+
+  const handleSelectDropDownOption = (selectedId) => {
+    headerDropDownText.forEach((dropDownOption) => {
+      if (dropDownOption.id === selectedId) {
+        dropDownOption.selected = true;
+        setSelectedDropDownOption(dropDownOption.text);
+      } else {
+        dropDownOption.selected = false;
+      }
+    });
+  };
 
   useEffect(() => {
     const timerId = setTimeout(async () => {
       const selectedCategories = getSelectedProductsCategory();
+      const selectedOption = headerDropDownText.find(option => option.text === selectedDropDownOption);
+      const id = selectedOption?.id || 0;
 
-      if (selectedCategories?.length === 0) {
-        if (productsCopy.length > 0) {
-          setProducts(productsCopy);
+      const hasCategories = selectedCategories.length > 0;
+      const isDefaultDropdown = selectedDropDownOption === dropDownText;
+
+      let combinedResults = [];
+      if (hasCategories) {
+        const promises = selectedCategories.map(fetchProductsForThisCategory);
+        const results = await Promise.all(promises);
+        combinedResults = results.flat();
+      }
+
+      const applyDropdownLogic = (data) => {
+        if (!data || data.length === 0) return;
+
+        switch (id) {
+          case 0:
+            setProducts(data);
+            break;
+          case 1:
+            setProducts([...data].sort((a, b) => b.id - a.id));
+            break;
+          case 2:
+            setProducts([...data].filter(prod => prod.rating.rate > 3.5));
+            break;
+          case 3:
+            setProducts([...data].sort((a, b) => a.price - b.price));
+            break;
+          case 4:
+            setProducts([...data].sort((a, b) => b.price - a.price));
+            break;
+          default:
+            setProducts(data);
+        }
+      };
+
+      if (isDefaultDropdown) {
+        if (hasCategories) {
+          applyDropdownLogic(combinedResults);
+        } else {
+          applyDropdownLogic(productsCopy);
         }
       } else {
-        const promises = selectedCategories.map((selCat) =>
-          fetchProductsForThisCategory(selCat)
-        );
-
-        if (promises.length > 0) {
-          const results = await Promise.all(promises);
-          const combinedResults = results.flat(); // cleaner flattening
-          setProducts(combinedResults);
+        if (hasCategories) {
+          applyDropdownLogic(combinedResults);
+        } else {
+          applyDropdownLogic(productsCopy);
         }
       }
+
+      setLoading(false);
     }, 500);
 
     return () => clearTimeout(timerId);
-  }, [categories]);
+  }, [categories, selectedDropDownOption]);
 
   return (
     <div>
@@ -85,13 +145,34 @@ export default function Body() {
         </div>
 
         <div className={styles.dropdown_select}>
-          <div className={styles.dropdown_text}>{dropDownText}</div>
+          <div className={styles.dropdown_text}>{selectedDropDownOption}</div>
           <Image
             src="/arrow-left.svg"
             alt="arrow_for_recommendations"
             width={16}
             height={16}
+            onClick={handleToggleHeaderDropDown}
+            style={{ cursor: "pointer" }}
           />
+          {toggleHeaderDropDown === true ? (
+            <div className={styles.dropdown}>
+              {headerDropDownText.map((dropDownText, i) => (
+                <div
+                  key={i}
+                  className={`${styles.dropdown_option} ${styles.dropdown_options_not_selected}`}
+                  onClick={() => handleSelectDropDownOption(i)}
+                >
+                  <Image
+                    alt="dropdown_select"
+                    width={16}
+                    height={12.3}
+                    src="/dropdown_select.svg"
+                  />
+                  <span>{dropDownText.text}</span>
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
 

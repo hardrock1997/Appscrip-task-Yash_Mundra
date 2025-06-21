@@ -30,3 +30,11 @@ export const accordionDropDownText =[
     "RAW MATERIALS",
     "PATTERN"
 ]
+
+export const headerDropDownText = [
+    {text:"RECOMMENDED",id:0,selected:false},
+    {text:"NEWEST FIRST",id:1,selected:false},
+    {text:"POPULAR",id:2,selected:false},
+    {text:"PRICE: HIGH TO LOW",id:3,selected:false},
+    {text:"PRICE: LOW TO HIGH",id:4,selected:false}
+]
