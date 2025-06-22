@@ -2,9 +2,9 @@ import styles from "../styles/TopHeader.module.css";
 import Image from "next/image";
 import { imageUrlsForTopHeaderImage } from "../utils/imageUrls";
 
-export default function MainHeader() {
+export default function TopHeader() {
   return (
-    <div className={styles.header_wrapper}>
+    <header className={styles.header_wrapper} role="banner" aria-label="Top logos">
       {imageUrlsForTopHeaderImage.map((_, i) => {
         if (i % 2 !== 0) return null;
 
@@ -17,9 +17,10 @@ export default function MainHeader() {
               <div className={styles.image_1}>
                 <Image
                   src={img1.src}
-                  alt={`top_header_logo_1_${i}`}
+                  alt={img1.alt || `Top Header Logo ${i + 1}`}
                   width={img1.width}
                   height={img1.height}
+                  priority
                 />
               </div>
             )}
@@ -27,15 +28,16 @@ export default function MainHeader() {
               <div className={styles.image_2}>
                 <Image
                   src={img2.src}
-                  alt={`top_header_logo_2_${i + 1}`}
+                  alt={img2.alt || `Top Header Logo ${i + 2}`}
                   width={img2.width}
                   height={img2.height}
+                  priority
                 />
               </div>
             )}
           </div>
         );
       })}
-    </div>
+    </header>
   );
 }

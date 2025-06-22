@@ -7,24 +7,23 @@ import {
 
 export default function ProductCard({ product }) {
   return (
-    <div className={styles.container}>
+    <article className={styles.container}>
       <Image
         src={product.image}
         width={290}
         height={300}
-        alt="product_image"
+        alt={product.title || "Product image"}
+        loading="lazy"
       />
 
       <div className={styles.product_card_bottom}>
-        <div className={styles.product_name_truncation}>
-          {product.title}
-        </div>
+        <h2 className={styles.product_name_truncation}>{product.title}</h2>
 
         <div>
           <span className={styles.down_text_2}>{productCardDownText}</span>
           <span className={styles.down_text}>{productCardDownText_2}</span>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

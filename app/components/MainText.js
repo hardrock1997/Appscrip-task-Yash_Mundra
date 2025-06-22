@@ -1,14 +1,16 @@
-import Image from "next/image"
-import style from "../styles/MainText.module.css"
+import Image from "next/image";
+import style from "../styles/MainText.module.css";
+
 export default function MainText() {
-    return (
-        <div className={style.main_text}>
-            <Image
-            src="/main_text.svg"
-            width={721}
-            height={168}
-            alt="main_text"
-            />
-        </div>
-    )
+  return (
+    <section className={style.main_text}>
+      <Image
+        src="/main_text.svg"
+        width={721}
+        height={168}
+        alt="Welcome to My Store - Discover top products and exclusive deals"
+        priority
+      />
+    </section>
+  );
 }

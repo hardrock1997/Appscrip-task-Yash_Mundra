@@ -5,19 +5,18 @@ import { navBarImagesUrl } from "../utils/imageUrls";
 
 export default function Navbar() {
   return (
-    <div className={styles.horizontal_links}>
-      {navBarImagesUrl.map(({ src, width, height, href }, i) => {
-        return (
-          <Link key={i} href={href}>
-            <Image
-              src={src}
-              width={width}
-              height={height}
-              alt={`navbar_image_${i}`}
-            />
-          </Link>
-        );
-      })}
-    </div>
+    <nav className={styles.horizontal_links} aria-label="Main navigation">
+      {navBarImagesUrl.map(({ src, width, height, href, alt }, i) => (
+        <Link key={i} href={href}>
+          <Image
+            src={src}
+            width={width}
+            height={height}
+            alt={alt || `Navigation icon ${i + 1}`}
+            priority={i === 0}
+          />
+        </Link>
+      ))}
+    </nav>
   );
 }

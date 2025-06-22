@@ -53,9 +53,16 @@ export default function Accordion({ categories, setCategories, accordionText }) 
 
       <div className={`${styles.accordion_opened} ${toggleAccordion ? styles.open : ""}`}>
         {categories && (
-          <div className={styles.unselect_all} onClick={handleUnSelectAll}>
+          <span
+            className={styles.unselect_all}
+            onClick={handleUnSelectAll}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === "Enter" && handleUnSelectAll()}
+            aria-label="Unselect all categories"
+          >
             {unSelectAllText}
-          </div>
+          </span>
         )}
 
         {categories ? (

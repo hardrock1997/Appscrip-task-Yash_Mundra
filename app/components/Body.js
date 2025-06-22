@@ -131,7 +131,11 @@ export default function Body() {
   }, [categories, selectedDropDownOption]);
 
   return (
-    <div>
+    <main>
+      <h1 className={styles.visually_hidden}>
+        Buy the Best Products Online - My Store
+      </h1>
+
       <div className={styles.options_at_top}>
         <div className={styles.products_length}>
           {error ? (
@@ -143,13 +147,18 @@ export default function Body() {
           ) : null}
         </div>
 
-        <div className={styles.filter_toggle}>
+        <div
+          className={styles.filter_toggle}
+          role="button"
+          tabIndex={0}
+          onClick={handleToggleSideFilters}
+          onKeyDown={(e) => e.key === "Enter" && handleToggleSideFilters()}
+        >
           <Image
             src="/arrow_for_filter.svg"
-            alt="arrow_left_for_filter"
+            alt="Toggle filter sidebar"
             width={16}
             height={16}
-            onClick={handleToggleSideFilters}
             style={{ cursor: "pointer" }}
           />
           <div className={styles.filter_toggle_text}>
@@ -157,17 +166,22 @@ export default function Body() {
           </div>
         </div>
 
-        <div className={styles.dropdown_select}>
+        <div
+          className={styles.dropdown_select}
+          role="button"
+          tabIndex={0}
+          onClick={handleToggleHeaderDropDown}
+          onKeyDown={(e) => e.key === "Enter" && handleToggleHeaderDropDown()}
+        >
           <div className={styles.dropdown_text}>{selectedDropDownOption}</div>
           <Image
             src="/arrow-left.svg"
-            alt="arrow_for_recommendations"
+            alt="Dropdown options for sorting"
             width={16}
             height={16}
-            onClick={handleToggleHeaderDropDown}
             style={{ cursor: "pointer" }}
           />
-          {toggleHeaderDropDown === true ? (
+          {toggleHeaderDropDown && (
             <div className={styles.dropdown}>
               {headerDropDownText.map((dropDownText, i) => (
                 <div
@@ -175,19 +189,19 @@ export default function Body() {
                   className={`${styles.dropdown_option} ${styles.dropdown_options_not_selected}`}
                   onClick={() => handleSelectDropDownOption(i)}
                 >
-                  {dropDownText.text === selectedDropDownOption ? (
+                  {dropDownText.text === selectedDropDownOption && (
                     <Image
-                      alt="dropdown_select"
+                      alt="Selected"
                       width={16}
                       height={12.3}
                       src="/dropdown_select.svg"
                     />
-                  ) : null}
+                  )}
                   <span>{dropDownText.text}</span>
                 </div>
               ))}
             </div>
-          ) : null}
+          )}
         </div>
       </div>
 
@@ -205,6 +219,7 @@ export default function Body() {
         categories={categories}
         loading={loading}
       />
-    </div>
+    </main>
   );
 }
+

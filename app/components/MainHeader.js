@@ -10,50 +10,37 @@ import Navbar from "./NavBar";
 
 export default function MainHeader() {
   return (
-    // <div className={styles.full_width_wrapper}>
-    <div className={styles.container}>
-
-
-
-        {/* <div className={styles.burger_icon}>
-        <Image
-          src="/solar_hamburger-menu-linear.svg"
-          alt="menu"
-          width={24}
-          height={24}
-        />
-      </div> */}
-      
-      <div className={styles.logo_image}>
-        <Link href="/">
+    <header className={styles.container}>
+      <div className={styles.logo_image} role="banner">
+        <Link href="/" aria-label="Home">
           <Image
             src={mainHeaderLogoUrl}
-            alt="main_header_logo"
+            alt="My Store Logo"
             width={36}
             height={36}
           />
         </Link>
       </div>
 
-      <div className={styles.central_heading}>LOGO</div>
+      <h1 className={styles.central_heading}>My Store</h1>
 
-      <div className={styles.horizontal_group}>
+      <div className={styles.horizontal_group} role="group" aria-label="Header Navigation Icons">
         {mainHeaderHorizontalGroupUrls.map((url, i) => (
           <Image
             key={i}
             src={url}
-            alt="horizontal_group_on_main_header"
+            alt={`Header navigation icon ${i + 1}`}
             width={24}
             height={24}
           />
         ))}
 
-        <div className={styles.sub_group}>
+        <div className={styles.sub_group} aria-label="Subgroup icons">
           {mainHeaderSubHorizontalGroupUrls.map((url, i) => (
             <Image
               key={i}
               src={url}
-              alt="sub_horizontal_group"
+              alt={`Subgroup icon ${i + 1}`}
               width={52}
               height={16}
             />
@@ -61,8 +48,9 @@ export default function MainHeader() {
         </div>
       </div>
 
-      <Navbar />
-    </div>
-    // </div>
+      <nav aria-label="Main site navigation">
+        <Navbar />
+      </nav>
+    </header>
   );
 }
