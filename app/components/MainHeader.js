@@ -10,7 +10,19 @@ import Navbar from "./NavBar";
 
 export default function MainHeader() {
   return (
+    // <div className={styles.full_width_wrapper}>
     <div className={styles.container}>
+
+
+
+        {/* <div className={styles.burger_icon}>
+        <Image
+          src="/solar_hamburger-menu-linear.svg"
+          alt="menu"
+          width={24}
+          height={24}
+        />
+      </div> */}
       
       <div className={styles.logo_image}>
         <Link href="/">
@@ -51,5 +63,6 @@ export default function MainHeader() {
 
       <Navbar />
     </div>
+    // </div>
   );
 }

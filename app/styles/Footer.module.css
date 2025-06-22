@@ -1,9 +1,29 @@
+.wrapper {
+  position: absolute;
+  top: 5200px;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+
+.divider {
+  position: absolute;     
+  width: 1248px;
+  top: 450px;
+  left: 228px;
+  border: 1px solid black;
+  transform: rotate(0deg);
+  border: 1px solid  #FFFFFF;
+}
+
 .container {
-    width: 1440px;
-    height: 650px;
-    position:absolute;
-    top: 5200px;
-    bottom: 0px;
-    background-color: #000000;
-    color: #FFFFFF;
+    position: relative;
+}
+
+.above_part{
+    position: relative;
+    height: 450px;
 }
